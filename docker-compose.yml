@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    ports:
+      - "8585:8585"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: gac-challenge
+      DB_USERNAME: root
+      DB_PASSWORD: Cobuccio2025!!@@
+    command: >
+      sh -c "php artisan migrate --force &&
+             php artisan db:seed &&
+             php artisan serve --host=0.0.0.0 --port=8585"
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Cobuccio2025!!@@
+      MYSQL_DATABASE: gac-challenge
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
