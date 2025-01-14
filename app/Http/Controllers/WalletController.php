@@ -15,13 +15,15 @@ class WalletController extends Controller
     public function deposit(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
             'amount' => 'required|numeric|min:1',
         ]);
 
         DB::beginTransaction();
         try {
-            $user = User::findOrFail($request->user_id);
+
+            $userId = auth()->id(); 
+
+            $user = User::findOrFail($userId);
             $balanceBefore = $user->balance;
 
             if ($balanceBefore < 0) {
@@ -107,11 +109,18 @@ class WalletController extends Controller
     /**
      * Reverter uma transação.
      */
-    public function revertTransaction($transactionId)
+    public function revertTransaction(Request $request)
     {
         DB::beginTransaction();
         try {
-            $transaction = Transaction::findOrFail($transactionId);
+
+            $userId = auth()->id(); 
+
+            $transaction = Transaction::findOrFail($request->transactionId);
+
+            if ($transaction->user_id !== $userId) {
+                abort(403, 'Unauthorized');
+            }
 
             if ($transaction->status == 'reverted') {
                 return response()->json(['status' => 'error', 'message' => 'Transação já revertida.'], 400);

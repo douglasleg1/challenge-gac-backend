@@ -55,7 +55,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('wallet')->group(function () {
         Route::post('deposit', [WalletController::class, 'deposit']);
         Route::post('transfer', [WalletController::class, 'transfer']);
-        Route::post('revert/{transactionId}', [WalletController::class, 'revertTransaction']);
+        Route::post('revert', [WalletController::class, 'revertTransaction']);
         Route::get('list-transfers', [WalletController::class, 'listTransfers']);
     });
 
