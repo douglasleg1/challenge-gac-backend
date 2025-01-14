@@ -137,4 +137,18 @@ class WalletController extends Controller
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 400);
         }
     }
+
+    public function listTransfers(Request $request)
+    {
+        $userId = auth()->id(); 
+    
+        $transfers = Transaction::where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->get(); // Adicione o método get() para executar a consulta
+    
+        return response()->json([
+            'status' => 'success',
+            'data' => $transfers,
+        ], 200);
+    }
 }
