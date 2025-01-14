@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'paths' => ['api/*', 'auth/*', 'open/*', 'wallet/*', 'users/*'],
+    'paths' => ['api/*', 'auth/*', 'open/*', 'wallet/*', 'users/*', '*/*'],
     'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
     'allowed_origins' => ['http://localhost:8080'], 
     'allowed_origins_patterns' => [],
