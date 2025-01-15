@@ -26,11 +26,7 @@ class WalletController extends Controller
             $user = User::findOrFail($userId);
             $balanceBefore = $user->balance;
 
-            if ($balanceBefore < 0) {
-                $user->balance += $request->amount;
-            } else {
-                $user->balance += $request->amount;
-            }
+            $user->balance += $request->amount;
 
             $user->save();
 
@@ -153,7 +149,7 @@ class WalletController extends Controller
     
         $transfers = Transaction::where('user_id', $userId)
             ->orderBy('created_at', 'desc')
-            ->get(); // Adicione o método get() para executar a consulta
+            ->get(); 
     
         return response()->json([
             'status' => 'success',

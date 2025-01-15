@@ -46,17 +46,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->can('read-users');
-        Route::get('me', [UserController::class, 'me']);
+        Route::get('me', [UserController::class, 'me'])->can('read-users');;
         Route::get('{id}', [UserController::class, 'show'])->can('read-users');
         Route::patch('{id}', [UserController::class, 'update'])->can('edit-users');
         Route::delete('{id}', [UserController::class, 'destroy'])->can('delete-users');
     });
 
     Route::prefix('wallet')->group(function () {
-        Route::post('deposit', [WalletController::class, 'deposit']);
-        Route::post('transfer', [WalletController::class, 'transfer']);
-        Route::post('revert', [WalletController::class, 'revertTransaction']);
-        Route::get('list-transfers', [WalletController::class, 'listTransfers']);
+        Route::post('deposit', [WalletController::class, 'deposit'])->can('create-deposit');
+        Route::post('transfer', [WalletController::class, 'transfer'])->can('create-transfer');
+        Route::post('revert', [WalletController::class, 'revertTransaction'])->can('create-revert');
+        Route::get('list-transfers', [WalletController::class, 'listTransfers'])->can('list-transfer');
     });
 
 });

@@ -29,6 +29,9 @@ class RoleAndPermissionSeeder extends Seeder
             // Logs
             'read-logs', 'create-logs', 'edit-logs', 'delete-logs',
 
+            // Wallet
+            'create-transfer', 'create-revert', 'list-transfer', 'create-deposit'
+
         ];
 
         // Criação das permissões
@@ -44,7 +47,9 @@ class RoleAndPermissionSeeder extends Seeder
         $adminRole->syncPermissions(Permission::where('guard_name', $guardName)->get());
 
         $userRole->syncPermissions([
-                'read-users', 
+                'read-users', 'create-users', 'edit-users', 'update-password-users', 'delete-users',
+                'create-transfer', 'create-revert', 'list-transfer', 'create-deposit',
+                'read-logs', 'create-logs', 'edit-logs', 'delete-logs',
         ]);
     }
 }
